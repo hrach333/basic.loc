@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\modules\admin\models\Pages;
+use yii\web\ConflictHttpException;
 
 class SiteController extends Controller
 {
@@ -65,7 +66,11 @@ class SiteController extends Controller
         //if (!$alias) { $alias = 'home';}
         !$alias ? $alias = 'home' : $alias;
         $result = Pages::find()->where(['page_name'=>$alias])->all();
+        if ($result) { 
         return $this->render('index', ['result' => $result[0]]);
+        } else { 
+            throw new \yii\web\HttpException(404,'Что-то пошло не так'); 
+        }
     }
 
     public function actionPage($response)
