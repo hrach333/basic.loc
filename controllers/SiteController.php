@@ -61,7 +61,7 @@ class SiteController extends Controller
     public function actionIndex($alias = false)
     {
         //if (!$alias) { $alias = 'home';}
-        !$alias ? $alias = 'home' : $alias;
+        $alias = !$alias ? 'home' : $alias;
         $result = Pages::find()->where(['page_name'=>$alias])->all();
         if ($result) { 
         return $this->render('index', ['result' => $result[0]]);
